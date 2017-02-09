@@ -3,7 +3,7 @@
 #define ll long long
 using namespace std;
 
-ll att=0,art=0;
+ll att=0,awt=0;
 
 struct process
 {
