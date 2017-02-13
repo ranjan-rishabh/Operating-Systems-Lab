@@ -3,7 +3,8 @@
 #define ll long long
 using namespace std;
 
-ll att=0,awt=0,co=0;
+double att=0,awt=0;
+ll co=0;
 bool lp=0;
 vector <pair<string,pair<int,int> > > v;
 struct process
