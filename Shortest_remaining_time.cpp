@@ -10,8 +10,6 @@ struct process
     string id;
     int ar;
     int ct;
-    int st;
-    int k;
     process *n;
 }*h=NULL;
 process *crn()
@@ -24,7 +22,6 @@ process *crn()
     cout<<"Enter CPU Time:";
     cin>>p->ct;
     p->n=NULL;
-    p->k=0;
     return p;
 }
 void shcn(int t, process *cu)
@@ -36,9 +33,9 @@ void shcn(int t, process *cu)
 void del(process *p,int t)
 {
     co++;
-    v.push_back(make_pair(p->id,make_pair((t-p->ar),(t-p->st))));
+    awt+=t-p->ar-p->ct;
+    v.push_back(make_pair(p->id,make_pair((t-p->ar),(awt))));
     att+=t-p->ar;
-    awt+=t-p->st;
     if(p==h)
     {
         h=h->n;
@@ -94,11 +91,6 @@ main()
             te=te->n;
         }
         cout<<'\n';
-        if(cu->k==0)
-        {
-            cu->st=t;
-            cu->k=1;
-        }
         t=t+1;
         cu->ct--;
         shcn(t,cu);
