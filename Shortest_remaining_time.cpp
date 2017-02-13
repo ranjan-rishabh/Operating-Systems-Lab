@@ -4,7 +4,7 @@
 using namespace std;
 
 ll att=0,awt=0,co=0;
-vector <pair<string,pair<int,int>>> v;
+vector <pair<string,pair<int,int> > > v;
 struct process
 {
     string id;
