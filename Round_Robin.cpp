@@ -4,16 +4,16 @@
 using namespace std;
 
 ll att=0,awt=0,co=0;
+bool lp=0;
 vector <pair<string,pair<int,int> > > v;
 struct process
 {
     string id;
     int ar;
-    int st;
     int ct;
+    int cct;
     int wt;
     int tt;
-    int k;
     process()
     {
         wt=0;
@@ -30,6 +30,7 @@ process *crn()
     cin>>p->ar;
     cout<<"Enter CPU Time:";
     cin>>p->ct;
+    p->cct=p->ct;
     p->n=NULL;
     return p;
 }
@@ -39,8 +40,8 @@ process *cpy(process *p)
     p1->id=p->id;
     p1->ar=p->ar;
     p1->ct=p->ct;
+    p1->cct=p->cct;
     p1->n=NULL;
-    p1->k=0;
     return p1;
 }
 void clq(process *p,process *pt)
@@ -52,7 +53,7 @@ void clq(process *p,process *pt)
         return;
     }
     process *cu=hq;
-    if(cu->n==NULL)
+    if(cu->n==NULL||cu->n==cu)
     {
         //cout<<"d4\n";
         process *p1=cpy(pt);
@@ -92,19 +93,25 @@ void delc(process *p)
 {
     bool z=0;
     process *cu=hq;
+    if(p==hq)
+    {
+        hq=hq->n;
+    }
     while(cu->n!=p)
     {
         z=1;
         cu=cu->n;
     }
     if(z==1)
-        cu->n=p->n;
-    else
-        cu->n=NULL;
-    if(p==hq)
     {
-        hq=hq->n;
+        cu->n=p->n;
     }
+    else
+    {
+        cu->n=NULL;
+        //cout<<"NU\n";
+    }
+    lp=1;
 }
 void shcn(process *p,int t)
 {
@@ -113,7 +120,7 @@ void shcn(process *p,int t)
     if(p->ct<=0)
     {
         //cout<<"d1\n";
-        p->wt=t-p->st;
+        p->wt=t-p->ar-p->cct;
         p->tt=t-p->ar;
         v.push_back(make_pair(p->id,make_pair(p->wt,p->tt)));
         att+=p->tt;
@@ -152,9 +159,11 @@ main()
     while(co<c)
     {
         te=h;
+        lp=0;
         cout<<"At Time:"<<t<<'\n';
         while(te!=NULL)
         {
+            //cout<<"nu\n";
             if(te->ar<=t)
             {
                 if(hq==NULL)
@@ -184,26 +193,31 @@ main()
         {
             px=cu->n;
         }
-        if(px->k==0)
-        {
-            px->st=t;
-            px->k=1;
-        }
-        if(px->ct<=ts)
+        if(px->ct<ts)
         {
             //cout<<"d2\n";
             t+=px->ct;
             px->ct-=ts;
+            if(pt>t)
+                pt-=ts;
         }
         else
         {
-            px->ct-=ts;
+            px->ct-=(pt-t);
+            //cout<<px->ct<<'\n';
             t=pt;
         }
         shcn(px,t);
-        cu=px;
+        if(lp==0)
+            cu=px;
+        else
+        {
+            z=0;
+            cu=px->n;
+        }
         getch();
     }
+    cout<<"Tasks Completed At:"<<t<<'\n';
     cout<<"Individual Waiting and Turnaround Times:\n";
     for(i=0;i<v.size();i++)
     {
