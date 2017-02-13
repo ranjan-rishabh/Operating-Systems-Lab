@@ -3,13 +3,15 @@
 #define ll long long
 using namespace std;
 
-ll att=0,awt=0,co=0;
+double att=0,awt=0;
+ll co=0;
 vector <pair<string,pair<int,int> > > v;
 struct process
 {
     string id;
     int ar;
     int ct;
+    int cct;
     process *n;
 }*h=NULL;
 process *crn()
@@ -21,6 +23,7 @@ process *crn()
     cin>>p->ar;
     cout<<"Enter CPU Time:";
     cin>>p->ct;
+    p->cct=p->ct;
     p->n=NULL;
     return p;
 }
@@ -33,7 +36,7 @@ void shcn(int t, process *cu)
 void del(process *p,int t)
 {
     co++;
-    awt+=t-p->ar-p->ct;
+    awt+=t-p->ar-p->cct;
     v.push_back(make_pair(p->id,make_pair((t-p->ar),(awt))));
     att+=t-p->ar;
     if(p==h)
@@ -101,6 +104,7 @@ main()
         }
         getch();
     }
+    cout<<"Tasks Completed At:"<<t<<'\n';
     cout<<"Individual Waiting and Turnaround Times:\n";
     for(i=0;i<v.size();i++)
     {
