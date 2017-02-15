@@ -6,15 +6,15 @@ using namespace std;
 double att=0,awt=0;
 ll co=0;
 bool lp=0;
-vector <pair<string,pair<int,int> > > v;
+vector <pair<string,pair<double,double> > > v;
 struct process
 {
     string id;
     int ar;
     int ct;
     int cct;
-    int wt;
-    int tt;
+    double wt;
+    double tt;
     process()
     {
         wt=0;
@@ -51,6 +51,7 @@ void clq(process *p,process *pt)
     {
         //cout<<"d3\n";
         hq=cpy(pt);
+        hq->n=hq;
         return;
     }
     process *cu=hq;
@@ -92,29 +93,27 @@ void del(process *p)
 }
 void delc(process *p)
 {
-    bool z=0;
     process *cu=hq;
     if(p==hq)
     {
         hq=hq->n;
     }
-    while(cu->n!=p)
-    {
-        z=1;
-        cu=cu->n;
-    }
-    if(z==1)
-    {
-        cu->n=p->n;
-    }
-    else
+    if(hq==NULL)
+        return;
+    if(cu->n==p&&p->n==cu)
     {
         cu->n=NULL;
-        //cout<<"NU\n";
+        lp=1;
+        return;
     }
+    while(cu->n!=p)
+    {
+        cu=cu->n;
+    }
+    cu->n=p->n;
     lp=1;
 }
-void shcn(process *p,int t)
+void shcn(process *p,double t)
 {
     cout<<"Process ID:"<<p->id<<'\n';
     cout<<"Process Arrival:"<<p->ar<<'\n';
@@ -134,10 +133,13 @@ main()
 {
     cout<<"Enter Number Of Processes:";
     ll c,i=1;
+    //double ctw;
     cin>>c;
     ll ts;
     cout<<"Enter Time Slice:";
     cin>>ts;
+    //cout<<"Enter Context Switching Time:";
+    //cin>>ctw;
     process *cu;
     while(i<=c)
     {
@@ -154,7 +156,7 @@ main()
         i++;
     }
     process *te=h;
-    ll t=0,pt=0;
+    double t=0;
     bool z=0;
     process * px;
     while(co<c)
@@ -182,9 +184,6 @@ main()
             }
             te=te->n;
         }
-
-        pt+=ts;
-
         if(z==0)
         {
             px=cu;
@@ -199,20 +198,20 @@ main()
             //cout<<"d2\n";
             t+=px->ct;
             px->ct-=ts;
-            if(pt>t)
-                pt-=ts;
         }
         else
         {
-            px->ct-=(pt-t);
+            px->ct-=ts;
             //cout<<px->ct<<'\n';
-            t=pt;
+            t+=ts;
         }
+        //t+=ctw;
         shcn(px,t);
         if(lp==0)
             cu=px;
         else
         {
+            //cout<<"d2\n";
             z=0;
             cu=px->n;
         }
