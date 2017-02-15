@@ -5,7 +5,7 @@ using namespace std;
 
 double att=0,awt=0;
 ll co=0;
-vector <pair<string,pair<int,int> > > v;
+vector <pair<string,pair<double,double> > > v;
 struct process
 {
     string id;
@@ -27,18 +27,18 @@ process *crn()
     p->n=NULL;
     return p;
 }
-void shcn(int t, process *cu)
+void shcn(double t, process *cu)
 {
     cout<<"Process ID:"<<cu->id<<'\n';
     cout<<"Process Arrival:"<<cu->ar<<'\n';
     cout<<"Process CPU Time:"<<cu->ct<<'\n';
 }
-void del(process *p,int t)
+void del(process *p,double t)
 {
     co++;
     awt+=t-p->ar-p->cct;
-    v.push_back(make_pair(p->id,make_pair((t-p->ar),(awt))));
     att+=t-p->ar;
+    v.push_back(make_pair(p->id,make_pair((double)(t-p->ar-p->cct),(double)(t-p->ar))));
     if(p==h)
     {
         h=h->n;
@@ -56,6 +56,9 @@ main()
     cout<<"Enter Number Of Processes:";
     ll c,i=1;
     cin>>c;
+    //double ctw;
+    //cout<<"Enter Context Switching:";
+    //cin>>ctw;
     process *cu;
     bool q=0;
     while(i<=c)
@@ -72,8 +75,10 @@ main()
         }
         i++;
     }
-    process *te=h;
-    ll t=0,lt=LLONG_MAX;
+    process *te=h,*px=NULL;
+    bool qp=0;
+    ll lt=LLONG_MAX;
+    double t=0;
     while(co<c)
     {
         te=h;
@@ -95,6 +100,10 @@ main()
         }
         cout<<'\n';
         t=t+1;
+        /*if(px!=cu&&qp==1)
+        {
+            t+=ctw;
+        }*/
         cu->ct--;
         shcn(t,cu);
         cout<<'\n';
@@ -102,6 +111,8 @@ main()
         {
             del(cu,t);
         }
+        px=cu;
+        qp=1;
         getch();
     }
     cout<<"Tasks Completed At:"<<t<<'\n';
