@@ -3,7 +3,7 @@
 #define ll long long
 using namespace std;
 
-double att=0,awt=0;
+double att=0,awt=0,ctw;
 ll co=0;
 vector <pair<string,pair<double,double> > > v;
 struct process
@@ -36,9 +36,9 @@ void shcn(double t, process *cu)
 void del(process *p,double t)
 {
     co++;
-    awt+=t-p->ar-p->cct;
-    att+=t-p->ar;
-    v.push_back(make_pair(p->id,make_pair((double)(t-p->ar-p->cct),(double)(t-p->ar))));
+    awt+=t-p->ar-p->cct-ctw;
+    att+=t-p->ar-ctw;
+    v.push_back(make_pair(p->id,make_pair((double)(t-p->ar-p->cct-ctw),(double)(t-p->ar-ctw))));
     if(p==h)
     {
         h=h->n;
@@ -56,7 +56,6 @@ main()
     cout<<"Enter Number Of Processes:";
     ll c,i=1;
     cin>>c;
-    double ctw;
     cout<<"Enter Context Switching:";
     cin>>ctw;
     process *cu;
@@ -119,7 +118,7 @@ main()
     cout<<"Individual Waiting and Turnaround Times:\n";
     for(i=0;i<v.size();i++)
     {
-        cout<<v[i].first<<"\t"<<v[i].second.first<<"\t"<<v[i].second.second<<"\n";
+        cout<<v[i].first<<'\t'<<v[i].second.first<<'\t'<<v[i].second.second<<'\n';
     }
     cout<<"Average Turnaround Time:"<<att/c<<'\n';
     cout<<"Average Waiting Time:"<<awt/c<<'\n';
