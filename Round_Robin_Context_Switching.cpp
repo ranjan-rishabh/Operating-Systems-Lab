@@ -93,16 +93,16 @@ void delc(process *p)
     process *cu=hq;
     if(p==hq)
     {
-        hq=hq->n;
+        if(hq->n==hq)
+        {
+            hq=NULL;
+            lp=1;
+        }
+        else
+            hq=hq->n;
     }
     if(hq==NULL)
         return;
-    if(cu->n==p&&p->n==cu)
-    {
-        cu->n=NULL;
-        lp=1;
-        return;
-    }
     while(cu->n!=p)
     {
         cu=cu->n;
@@ -210,7 +210,7 @@ main()
     cout<<"Individual Waiting and Turnaround Times:\n";
     for(i=0;i<v.size();i++)
     {
-        cout<<v[i].first<<"\t"<<v[i].second.first<<"\t"<<v[i].second.second<<"\n";
+        cout<<v[i].first<<'\t'<<v[i].second.first<<'\t'<<v[i].second.second<<'\n';
     }
     cout<<"Average Turnaround Time:"<<att/c<<'\n';
     cout<<"Average Waiting Time:"<<awt/c<<'\n';
