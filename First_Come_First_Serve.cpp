@@ -41,7 +41,7 @@ void shcn(int t)
     cout<<"Waiting Time:"<<h->wt<<'\n';
     cout<<"Turnaround Time:"<<h->tt<<'\n';
     att+=h->tt;
-    art+=h->wt;
+    awt+=h->wt;
 }
 main()
 {
