@@ -3,7 +3,7 @@
 #define ll long long
 using namespace std;
 
-double att=0,awt=0;
+double att=0,awt=0,ctw;
 ll co=0;
 bool lp=0;
 vector <pair<string,pair<double,double> > > v;
@@ -49,7 +49,6 @@ void clq(process *p,process *pt)
 {
     if(hq==NULL)
     {
-        //cout<<"d3\n";
         hq=cpy(pt);
         hq->n=hq;
         return;
@@ -57,7 +56,6 @@ void clq(process *p,process *pt)
     process *cu=hq;
     if(cu->n==NULL||cu->n==cu)
     {
-        //cout<<"d4\n";
         process *p1=cpy(pt);
         cu->n=p1;
         p1->n=p;
@@ -79,7 +77,6 @@ void del(process *p)
     process *cu=h;
     if(cu==p)
     {
-        //cout<<"l1\n";
         h=h->n;
         delete p;
         return;
@@ -119,9 +116,8 @@ void shcn(process *p,double t)
     cout<<"Process Arrival:"<<p->ar<<'\n';
     if(p->ct<=0)
     {
-        //cout<<"d1\n";
-        p->wt=t-p->ar-p->cct;
-        p->tt=t-p->ar;
+        p->wt=t-p->ar-p->cct-ctw;
+        p->tt=t-p->ar-ctw;
         v.push_back(make_pair(p->id,make_pair(p->wt,p->tt)));
         att+=p->tt;
         awt+=p->wt;
@@ -133,7 +129,6 @@ main()
 {
     cout<<"Enter Number Of Processes:";
     ll c,i=1;
-    double ctw;
     cin>>c;
     ll ts;
     cout<<"Enter Time Slice:";
@@ -166,18 +161,15 @@ main()
         cout<<"At Time:"<<t<<'\n';
         while(te!=NULL)
         {
-            //cout<<"nu\n";
             if(te->ar<=t)
             {
                 if(hq==NULL)
                 {
-                    //cout<<"d1\n";
                     clq(NULL,te);
                     cu=hq;
                 }
                 else
                 {
-                    //cout<<"d2\n";
                     clq(cu,te);
                 }
                 del(te);
@@ -195,14 +187,12 @@ main()
         }
         if(px->ct<ts)
         {
-            //cout<<"d2\n";
             t+=px->ct;
             px->ct-=ts;
         }
         else
         {
             px->ct-=ts;
-            //cout<<px->ct<<'\n';
             t+=ts;
         }
         t+=ctw;
@@ -211,7 +201,6 @@ main()
             cu=px;
         else
         {
-            //cout<<"d2\n";
             z=0;
             cu=px->n;
         }
