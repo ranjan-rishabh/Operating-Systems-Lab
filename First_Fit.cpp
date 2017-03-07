@@ -69,7 +69,7 @@ main()
     {
         ll x;
         cin>>x;
-        maxi=max(x,ma);
+        maxi=max(x,maxi);
         m.push_back(x);
         i++;
     }
