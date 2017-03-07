@@ -62,14 +62,14 @@ main()
     memset(wt,-1,100);
     m.push_back(0);
     cout<<"Enter Number Of Memory Bocks:";
-    ll s,i=0,ma=0;
+    ll s,i=0,maxi=0;
     cin>>s;
     cout<<"Enter Size Of Memory Blocks Serial Wise:\n";
     while(i<s)
     {
         ll x;
         cin>>x;
-        ma=max(x,ma);
+        maxi=max(x,ma);
         m.push_back(x);
         i++;
     }
@@ -82,7 +82,7 @@ main()
     {
         ll x,f;
         cin>>x>>f;
-        if(f>ma)
+        if(f>maxi)
         {
             cor[i+1]=1;co++;
         }
