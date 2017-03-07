@@ -5,7 +5,7 @@ using namespace std;
 ll co=0,ifr=0,efr=0,ti=0;bool mj[100];
 vector <ll> m;
 vector < pair<ll,ll> > jo;
-ll d[100],wt[100];
+ll d[100],wt[100],ma[100];
 bool cor[100];
 void mem_alloc(ll s,ll c)
 {
@@ -19,6 +19,7 @@ void mem_alloc(ll s,ll c)
             if(jo[i].second<=m[j])
             {
                 d[i]=j;
+                ma[i]=ti;
                 mj[j]=1;
                 ifr+=m[j]-jo[i].second;
                 t++;
@@ -42,10 +43,10 @@ ll proc_d(ll c)
         {
             //cout<<"no\n";
             ti+=jo[k].first;
-            wt[k]=ti-jo[k].first;
+            wt[k]=ti-ma[k]-jo[k].first;
             mj[d[k]]=0;
             cor[k]=1;
-            ifr-=(m[d[k]]-jo[k].first);
+            ifr-=(m[d[k]]-jo[k].second);
             if(ifr<0)
                 ifr=0;
             co++;
@@ -102,26 +103,10 @@ main()
         cout<<"Internal Fragmentation:"<<ifr<<'\n';
         cout<<"External Fragmentation:"<<efr<<'\n';
         i=proc_d(c);
-        cout<<"\nProcess Completed:"<<i<<"Time:"<<ti<<'\n';
+        cout<<"Process Completed:"<<i<<"\tTime:"<<ti<<'\n';
         cout<<"Waiting Time:"<<wt[i]<<'\n';
         getch();
+        cout<<'\n';
     }
     cout<<"Throughput:"<<(double)c/ti<<'\n';
 }
-/*
-5
-9500
-7000
-4500
-8500
-3000
-8
-5 5760
-4 4190
-8 3190
-2 2030
-2 2550
-6 6992
-8 8940
-10 740
-*/
