@@ -74,6 +74,121 @@ double sstf()
     }
     return ti;
 }
+double scan()
+{
+    ll ptr=0, psec=0, tr=0;
+    double ti=in[0].first.first;
+    ll co=0;
+    bool dr=0;
+    while(co<c)
+    {
+        ll temp1=LLONG_MAX, temp2=LLONG_MIN;bool po=0,pi=0;
+        ll p1=-1,p2=-1;
+        for(ll i=0;i<c;i++)
+        {
+            if(in[i].first.first<=ti&&!v[in[i].first.second])
+            {
+                pi=1;
+                if(in[i].second.first>tr)
+                {
+                    if(temp1>in[i].second.first)
+                    {
+                        if(dr==0)
+                            po=1;
+                        temp1=in[i].second.first;
+                        p1=i;
+                    }
+                }
+                else
+                {
+                    if(temp2<in[i].second.first)
+                    {
+                        cout<<"1\n";
+                        if(dr==1)
+                            po=1;
+                        temp2=in[i].second.first;
+                        p2=i;
+                    }
+                }
+            }
+        }
+        if(pi==1)
+        {
+            if(po==1)
+            {
+                if(dr==0)
+                {
+                    cout<<"2\n";
+                    ti+=calc(temp1,in[p1].second.second,ptr,psec);
+                    lt[in[p1].first.second]=calc(temp1,in[p1].second.second,ptr,psec)-1;
+                    v[in[p1].first.second]=1;
+                    ptr=temp1;
+                    psec=in[p1].second.second;
+                    tr=temp1;
+                    cout<<"Request Completed:"<<in[p1].first.second<<'\n';
+                }
+                else
+                {
+                    cout<<"3\n";
+                    ti+=calc(temp2,in[p2].second.second,ptr,psec);
+                    lt[in[p2].first.second]=calc(temp2,in[p2].second.second,ptr,psec)-1;
+                    v[in[p2].first.second]=1;
+                    ptr=temp2;
+                    psec=in[p2].second.second;
+                    tr=temp2;
+                    cout<<"Request Completed:"<<in[p2].first.second<<'\n';
+                }
+                co++;
+            }
+            else
+            {
+                if(dr==0)
+                {
+                    cout<<"4\n";
+                    ll tm=calc(200,in[p2].second.second,ptr,psec)-1;
+                    ti+=(tm+calc(temp2,in[p2].second.second,200,in[p2].second.second));
+                    lt[in[p2].first.second]=tm+calc(temp2,in[p2].second.second,200,in[p2].second.second)-1;
+                    v[in[p2].first.second]=1;
+                    ptr=temp2;
+                    psec=in[p2].second.second;
+                    dr=1;
+                    tr=temp2;
+                    cout<<"Request Completed:"<<in[p2].first.second<<'\n';
+                }
+                if(dr==1)
+                {
+                    cout<<"5\n";
+                    ll tm=calc(0,in[p1].second.second,ptr,psec)-1;
+                    ti+=(tm+calc(temp1,in[p1].second.second,0,in[p1].second.second));
+                    lt[in[p1].first.second]=tm+calc(temp1,in[p1].second.second,0,in[p1].second.second)-1;
+                    v[in[p1].first.second]=1;
+                    ptr=temp1;
+                    psec=in[p1].second.second;
+                    dr=0;
+                    tr=temp1;
+                    cout<<"Request Completed:"<<in[p1].first.second<<'\n';
+                }
+                co++;
+            }
+        }
+        else
+        {
+            for(ll i=0;i<c;i++)
+            {
+                if(!v[i])
+                {
+                    if(in[i].first.first>ti)
+                    {
+                        cout<<"2\n";
+                        ti=in[i].first.first;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return ti;
+}
 main()
 {
     cout<<"Enter Number Of Requests:";
@@ -87,12 +202,14 @@ main()
     }
     int po;
     double et;
-    cout<<"1)FCFS\n2)SSTF\nEnter Choice:";
+    cout<<"1)FCFS\n2)SSTF\n3)SCAN\nEnter Choice:";
     cin>>po;
     if(po==1)
         et=fcfs();
-    else
+    else if(po==2)
         et=sstf();
+    else
+        et=scan();
     double avg=0;
     for(int i=1;i<=c;i++)
     {
