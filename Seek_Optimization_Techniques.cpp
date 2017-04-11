@@ -103,7 +103,6 @@ double scan()
                 {
                     if(temp2<in[i].second.first)
                     {
-                        cout<<"1\n";
                         if(dr==1)
                             po=1;
                         temp2=in[i].second.first;
@@ -118,7 +117,6 @@ double scan()
             {
                 if(dr==0)
                 {
-                    cout<<"2\n";
                     ti+=calc(temp1,in[p1].second.second,ptr,psec);
                     lt[in[p1].first.second]=calc(temp1,in[p1].second.second,ptr,psec)-1;
                     v[in[p1].first.second]=1;
@@ -129,7 +127,6 @@ double scan()
                 }
                 else
                 {
-                    cout<<"3\n";
                     ti+=calc(temp2,in[p2].second.second,ptr,psec);
                     lt[in[p2].first.second]=calc(temp2,in[p2].second.second,ptr,psec)-1;
                     v[in[p2].first.second]=1;
@@ -144,7 +141,6 @@ double scan()
             {
                 if(dr==0)
                 {
-                    cout<<"4\n";
                     ll tm=calc(200,in[p2].second.second,ptr,psec)-1;
                     ti+=(tm+calc(temp2,in[p2].second.second,200,in[p2].second.second));
                     lt[in[p2].first.second]=tm+calc(temp2,in[p2].second.second,200,in[p2].second.second)-1;
@@ -155,9 +151,8 @@ double scan()
                     tr=temp2;
                     cout<<"Request Completed:"<<in[p2].first.second<<'\n';
                 }
-                if(dr==1)
+                else if(dr==1)
                 {
-                    cout<<"5\n";
                     ll tm=calc(0,in[p1].second.second,ptr,psec)-1;
                     ti+=(tm+calc(temp1,in[p1].second.second,0,in[p1].second.second));
                     lt[in[p1].first.second]=tm+calc(temp1,in[p1].second.second,0,in[p1].second.second)-1;
@@ -179,7 +174,6 @@ double scan()
                 {
                     if(in[i].first.first>ti)
                     {
-                        cout<<"2\n";
                         ti=in[i].first.first;
                         break;
                     }
@@ -220,3 +214,10 @@ main()
     cout<<"Average Latency Time:"<<(double)(avg/c)<<'\n';
     cout<<"Average Time:"<<(double)(et/c);
 }
+/*
+0 45 0
+23 132 5
+26 20 3
+31 23 7
+45 170 5
+*/
