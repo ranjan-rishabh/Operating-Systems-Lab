@@ -218,6 +218,11 @@ void shcn(string n,directory *cu)
 void delf(string n,directory *cu)
 {
     int i;
+    if(cu==NULL)
+    {
+        cout<<"No Such File\n";
+        return;
+    }
     for(i=0;i<cu->k;i++)
     {
         if(cu->f[i]->name==n)
